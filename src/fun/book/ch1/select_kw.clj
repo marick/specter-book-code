@@ -14,10 +14,10 @@
   (s/select [:a :b] {:a 1}) => [nil]
   (s/select [:a :b] {:a {}}) => [nil])
 
-(defn select-kw [selector structure]
+(defn select-kw [[this & continued-selecting :as selector] structure]
   (if (empty? selector)
     (vector structure)
-    (select-kw (rest selector) (get structure (first selector)))))
+    (select-kw continued-selecting (get structure this))))
 
 (facts "same behavior from local implementation"
   (select-kw [:a] nil) => [nil]
