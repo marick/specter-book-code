@@ -1,2 +1,1 @@
-# specter-book-code
-Source and tests for Using and Extending Specter
+Source and test code for examples and exercises from [*Extending and Using Specter*](https://leanpub.com/specter). 
