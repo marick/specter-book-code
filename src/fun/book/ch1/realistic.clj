@@ -74,3 +74,10 @@
   (select [integer? odd?] 1) => [1]
   (select [integer? even?] 1) => nil
   (select [integer? odd?] "hi") => nil)
+
+(facts "combining keywords and predicates"
+  (select [:a map? :b] {:a 1}) => nil
+  (select [:a map? :b] {:a {:b 1}}) => [1]
+  (select [:a map? :b] {:a {}}) => [nil]
+  (select [map? :a] {:b 1}) => [nil]
+  (select [map? :a] 1) => nil)

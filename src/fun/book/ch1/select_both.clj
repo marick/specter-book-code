@@ -30,3 +30,10 @@
   (select-both [integer? odd?] 1) => [1]
   (select-both [integer? even?] 1) => nil
   (select-both [integer? odd?] "hi") => nil)
+
+(facts "combining keywords and predicates"
+  (select-both [:a map? :b] {:a 1}) => nil
+  (select-both [:a map? :b] {:a {:b 1}}) => [1]
+  (select-both [:a map? :b] {:a {}}) => [nil]
+  (select-both [map? :a] {:b 1}) => [nil]
+  (select-both [map? :a] 1) => nil)
