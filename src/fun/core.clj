@@ -55,15 +55,15 @@
     (select* x xs structure)))
 
 
-(require '[com.rpl.specter.impl :as impl])
+;; (require '[com.rpl.specter.impl :as impl])
 
-(prn StructurePath)
-(prn (impl/structure-path-impl :key))
+;; (prn StructurePath)
+;; (prn (impl/structure-path-impl :key))
 
 
-(defn selector-element-functions-for [selector]
-  (->> selector
-       (map (partial find-protocol-impl StructurePath))
-       (map :select*)))
+;; (defn selector-element-functions-for [selector]
+;;   (->> selector
+;;        (map (partial find-protocol-impl StructurePath))
+;;        (map :select*)))
 
-(prn (selector-element-functions-for [:a map? :b]))
+;; (prn (selector-element-functions-for [:a map? :b]))

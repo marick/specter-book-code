@@ -1,9 +1,9 @@
-(ns fun.exercises.ch1.select-kw
+(ns fun.reference.ch1.select-kw
   (:require [com.rpl.specter :as s])
   (:use midje.sweet commons.clojure.core))
 
 
-(facts "Mimic Specter's behavior with keywords"
+(facts "Specter's behavior with keywords"
   (fact "descends down a map"
     (s/select [:a] {:a 1}) => [1]
     (s/select [:a :b] {:a {:b 1}}) => [1])
@@ -17,3 +17,4 @@
     (s/select [:a] nil) => [nil]
     (s/select [:a] :something-random) => [nil]
     (s/select [:a :b] {:a 1}) => [nil]))
+
