@@ -7,6 +7,9 @@
   (fact "predicate success: the value is passed through to the result vector"
     (s/select [odd?] 1) => [1])
 
+  (fact "as is common, predicates don't have to be strictly true or false"
+    (s/select [#(get % :a)] {:a 1}) => [{:a 1}])
+
   (fact "predicate failure:, there is no result vector"
     ;; Note that this is different from the behavior of keywords:
     ;; there, a missing key results in `nil` being passed through
