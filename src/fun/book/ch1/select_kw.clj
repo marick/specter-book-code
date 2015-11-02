@@ -1,11 +1,10 @@
 (ns fun.book.ch1.select-kw
   (:use midje.sweet commons.clojure.core))
 
-
-(defn select-kw [[this & continued-selecting :as selector] structure]
+(defn select-kw [selector structure]
   (if (empty? selector)
     (vector structure)
-    (select-kw continued-selecting (get structure this))))
+    (select-kw (rest selector) (get structure (first selector)))))
 
 (facts "same behavior from local implementation"
   (select-kw [:a] nil) => [nil]
