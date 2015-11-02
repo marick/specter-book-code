@@ -1,6 +1,6 @@
-(ns fun.book.ch1.all
+(ns book-code.ch1.all
   (:use midje.sweet commons.clojure.core)
-  (:use fun.book.ch1.realistic))
+  (:use book-code.ch1.realistic))
 
 (deftype AllType [])
 

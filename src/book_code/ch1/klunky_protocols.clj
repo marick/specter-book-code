@@ -1,4 +1,4 @@
-(ns fun.book.ch1.klunky-protocols
+(ns book-code.ch1.klunky-protocols
   (:use midje.sweet commons.clojure.core))
 
 

@@ -1,4 +1,4 @@
-(ns fun.book.ch1.realistic
+(ns book-code.ch1.realistic
   (:use midje.sweet commons.clojure.core))
 
 

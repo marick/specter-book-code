@@ -1,4 +1,4 @@
-(ns fun.book.ch1.select-pred
+(ns book-code.ch1.select-pred
   (:use midje.sweet commons.clojure.core))
 
 (defn select-pred [selector candidate]

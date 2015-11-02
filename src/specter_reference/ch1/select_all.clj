@@ -1,4 +1,4 @@
-(ns fun.reference.ch1.select-all
+(ns specter-reference.ch1.select-all
   (:require [com.rpl.specter :as s])
   (:use midje.sweet commons.clojure.core))
 

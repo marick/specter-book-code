@@ -1,12 +1,11 @@
-(ns fun.book.ch1.select-kw
+(ns exercises.ch1.select-kw
   (:use midje.sweet commons.clojure.core))
 
-(defn select-kw [selector structure]
-  (if (empty? selector)
-    (vector structure)
-    (select-kw (rest selector) (get structure (first selector)))))
 
-(facts "same behavior from local implementation"
+(defn select-kw [selector structure]
+  )
+
+(future-facts "Behaves the way specter/select does"
   (select-kw [:a] nil) => [nil]
   (select-kw [:a] :something-random) => [nil]
   (select-kw [:a] {:a 1}) => [1]

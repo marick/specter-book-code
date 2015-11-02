@@ -1,4 +1,4 @@
-(ns fun.book.ch1.select-both
+(ns book-code.ch1.select-both
   (:use midje.sweet commons.clojure.core))
 
 (defn select-both [[x & xs :as selector] structure]
