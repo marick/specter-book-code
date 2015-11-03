@@ -5,7 +5,10 @@
 (defprotocol StructurePath
   (select* [this remainder structure]))
 
-(declare select)
+(defn select [[x & xs :as selector] structure]
+  (if (empty? selector)
+    (vector structure)
+    (select* x xs structure)))
 
 (extend-type clojure.lang.Keyword
   StructurePath
@@ -18,11 +21,6 @@
     (if (this structure)
       (select remainder structure)
       nil)))
-
-(defn select [[x & xs :as selector] structure]
-  (if (empty? selector)
-    (vector structure)
-    (select* x xs structure)))
 
 
 

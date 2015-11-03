@@ -4,18 +4,18 @@
 
 
 (defprotocol StructurePath
-  (select* [this structure next-fn]))
+  (select* [this structure continuation]))
 
 (extend-type clojure.lang.Keyword
   StructurePath
-  (select* [this structure next-fn]
-    (next-fn (get structure this))))
+  (select* [this structure continuation]
+    (continuation (get structure this))))
 
 (extend-type clojure.lang.AFn
   StructurePath
-  (select* [this structure next-fn]
+  (select* [this structure continuation]
     (if (this structure)
-      (next-fn structure)
+      (continuation structure)
       nil)))
 
 
@@ -31,27 +31,14 @@
       (selector-function element structure continuation))))
 
 
-;;; Wrong version
-(defn frozen-selector-actions [selector]
-  (reduce (fn [continuation element]
-            (mkfn:selector-function-calling-continuation element continuation))
-          identity
-          (reverse selector)))
-
-(defn select [selector structure]
-  (let [frozen (frozen-selector-actions selector)]
-    (vector (frozen structure))))
-
-
-;; Corrected
-(defn frozen-selector-actions [selector]
+(defn mkfn:frozen-selector-actions [selector]
   (reduce (fn [continuation element]
             (mkfn:selector-function-calling-continuation element continuation))
           vector
           (reverse selector)))
 
 (defn select [selector structure]
-  (let [frozen (frozen-selector-actions selector)]
+  (let [frozen (mkfn:frozen-selector-actions selector)]
     (frozen structure)))
 
 
