@@ -3,13 +3,13 @@
   (:use book-code.ch1.realistic))
 
 (deftype AllType [])
+(def ALL (->AllType))
 
 (extend-type AllType
   StructurePath
   (select* [this structure next-fn]
     (into [] (mapcat next-fn structure))))
 
-(def ALL (->AllType))
 
 
 (facts "about ALL"
@@ -35,7 +35,13 @@
     (select [ALL even?] [1 2 3 4])
       =>                      [  2   4]
       (select [ALL :a even?] [{:a 1} {:a 2}])
-      =>                     [           2 ]))
+      =>                     [           2 ])
+
+  (fact "ALL returns vectors"
+    (select [ALL] '(1 2 3)) => vector?
+    (select [ALL even?] [1 2 3]) => vector?))
+
+
 
 ;; Old tests continue to pass.
 
@@ -63,3 +69,7 @@
   (select [:a map? :b] {:a {}}) => [nil]
   (select [map? :a] {:b 1}) => [nil]
   (select [map? :a] 1) => nil)
+
+(facts "all forms return specifically vectors"
+  (select [:a :b] {:a {:b 1}}) => vector?
+  (select [odd?] 1) => vector?)

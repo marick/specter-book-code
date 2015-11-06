@@ -68,3 +68,7 @@
   (select [:a map? :b] {:a {}}) => [nil]
   (select [map? :a] {:b 1}) => [nil]
   (select [map? :a] 1) => nil)
+
+(fact "the two forms normally return specifically vectors"
+  (select [:a :b] {:a {:b 1}}) => vector?
+  (select [odd?] 1) => vector?)

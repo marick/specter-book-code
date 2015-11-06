@@ -14,3 +14,6 @@
   (select-pred [integer? odd?] 1) => [1]
   (select-pred [integer? even?] 1) => nil
   (select-pred [integer? odd?] "hi") => nil)
+
+(fact "the result is specifically a vector"
+  (select-pred [odd?] 1) => vector?)

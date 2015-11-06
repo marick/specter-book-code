@@ -16,3 +16,6 @@
   (select-kw [:a :b] {:a {:b 1}}) => [1]
   (select-kw [:a :b] {:a 1}) => [nil]
   (select-kw [:a :b] {:a {}}) => [nil])
+
+(fact "the result is specifically a vector"
+  (select-kw [:a :b] {:a {:b 1}}) => vector?)

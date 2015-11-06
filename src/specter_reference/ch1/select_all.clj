@@ -31,8 +31,12 @@
   (s/select [s/ALL :a even?] [{:a 1}])
   =>                         [      ])
 
-
 (fact "ALL can appear later in the vector"
   (s/select [:a s/ALL even?] {:a [1 2 3]})
   =>                             [  2  ])
 
+(fact "The result is specifically a vector"
+  (s/select [s/ALL] [1 2 3 4]) => vector?
+  (s/select [s/ALL s/ALL] [[0] [[1 2] 3]]) => vector?
+  (s/select [s/ALL even?] [1 2 3 4]) => vector?
+  (s/select [s/ALL :a] [{:a 1} {:a 2} {   }]) => vector?)

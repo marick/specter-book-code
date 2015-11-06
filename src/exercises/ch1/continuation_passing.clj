@@ -49,3 +49,8 @@
   (select [:a map? :b] {:a {}}) => [nil]
   (select [map? :a] {:b 1}) => [nil]
   (select [map? :a] 1) => nil)
+
+(future-facts
+  "the two forms normally return vectors (not any other kind of sequential collection"
+  (select [:a :b] {:a {:b 1}}) => vector?
+  (select [odd?] 1) => vector?)

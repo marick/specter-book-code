@@ -16,4 +16,7 @@
   (fact "as with `get`, bogus structures are silently accepted"
     (s/select [:a] nil) => [nil]               ; (get nil :a) => nil
     (s/select [:a] "no-map") => [nil]          ; (get "no-map" :a) => nil
-    (s/select [:a :b] {:a 1}) => [nil]))       ; (get 1 :a) => nil
+    (s/select [:a :b] {:a 1}) => [nil])       ; (get 1 :a) => nil
+
+  (fact "the result is specifically a vector"
+    (s/select [:a :b] {:a {:b 1}}) => vector?))

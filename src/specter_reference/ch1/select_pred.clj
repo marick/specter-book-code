@@ -18,5 +18,7 @@
   (fact "given multiple predicates, each passes judgment in turn"
     (s/select [integer? odd?] 1) => [1]
     (s/select [integer? even?] 1) => nil
-    (s/select [integer? odd?] "hi") => nil))
+    (s/select [integer? odd?] "hi") => nil)
 
+  (fact "the result is specifically a vector"
+    (s/select [odd?] 1) => vector?))

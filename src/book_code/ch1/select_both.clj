@@ -37,3 +37,7 @@
   (select-both [:a map? :b] {:a {}}) => [nil]
   (select-both [map? :a] {:b 1}) => [nil]
   (select-both [map? :a] 1) => nil)
+
+(fact "the two forms normally return specifically vectors"
+  (select-both [:a :b] {:a {:b 1}}) => vector?
+  (select-both [odd?] 1) => vector?)
