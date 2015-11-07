@@ -3,7 +3,7 @@
 
 
 (defn select-kw [selector structure]
-  )
+  :unimplemented)
 
 (future-facts "Behaves the way specter/select does"
   (select-kw [:a] nil) => [nil]

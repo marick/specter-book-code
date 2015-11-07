@@ -7,7 +7,7 @@
 
 ;; (extend-type AllType
 ;;   StructurePath
-;;   (select* [this structure next-fn]
+;;   (select* [this structure continuation]
 ;;     ))
 
 (future-facts "about ALL"

@@ -7,8 +7,8 @@
 
 (extend-type AllType
   StructurePath
-  (select* [this structure next-fn]
-    (into [] (mapcat next-fn structure))))
+  (select* [this structure continuation]
+    (into [] (mapcat continuation structure))))
 
 
 
