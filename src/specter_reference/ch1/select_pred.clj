@@ -18,6 +18,8 @@
   (fact "given multiple predicates, each passes judgment in turn"
     (s/select [integer? odd?] 1) => [1]
     (s/select [integer? even?] 1) => nil
+    ;; Note that the first predicate's failure prevents the second
+    ;; from being checked. (It would throw an exception if it were.)
     (s/select [integer? odd?] "hi") => nil)
 
   (fact "the result is specifically a vector"
