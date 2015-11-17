@@ -16,11 +16,11 @@
       (continuation structure)
       nil)))
 
-(defn mkfn:frozen-selector-actions [selector]
+(defn predict-select-computation [selector]
   )
 
 (defn select [selector structure]
-  ((mkfn:frozen-selector-actions selector) structure))
+  ((predict-select-computation selector) structure))
 
 
 

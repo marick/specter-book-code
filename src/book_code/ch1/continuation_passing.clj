@@ -16,7 +16,7 @@
       (continuation structure)
       nil)))
 
-(defn mkfn:frozen-selector-actions [selector]
+(defn predict-select-computation [selector]
   (reduce (fn [continuation element]
             (fn [structure]
               (select* element structure continuation)))
@@ -24,7 +24,7 @@
           (reverse selector)))
 
 (defn select [selector structure]
-  ((mkfn:frozen-selector-actions selector) structure))
+  ((predict-select-computation selector) structure))
 
 
 
