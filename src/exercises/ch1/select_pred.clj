@@ -2,7 +2,7 @@
   (:use midje.sweet commons.clojure.core))
 
 (defn select-pred [selector candidate]
-  )
+  :unimplemented)
 
 (future-fact "our implementation matches Specter's"
   (select-pred [odd?] 1) => [1]
