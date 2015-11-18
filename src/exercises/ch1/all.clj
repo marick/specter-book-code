@@ -5,10 +5,10 @@
 (deftype AllType [])
 (def ALL (->AllType))
 
-;; (extend-type AllType
-;;   StructurePath
-;;   (select* [this structure continuation]
-;;     ))
+(extend-type AllType
+  StructurePath
+  (select* [this structure continuation]
+    :unimplemented))
 
 (future-facts "about ALL"
   (fact "all by itself is a no-op"

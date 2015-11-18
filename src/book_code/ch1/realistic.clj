@@ -31,18 +31,14 @@
       (selector-function element structure continuation))))
 
 
-(defn mkfn:frozen-selector-actions [selector]
+(defn predict-select-computation [selector]
   (reduce (fn [continuation element]
             (mkfn:selector-function-calling-continuation element continuation))
           vector
           (reverse selector)))
 
 (defn select [selector structure]
-  (let [frozen (mkfn:frozen-selector-actions selector)]
-    (frozen structure)))
-
-
-
+  ((predict-select-computation selector) structure))
 
 (fact "works the same for keywords"
   (select [:a] nil) => [nil]

@@ -1,4 +1,6 @@
-(ns exercises.ch1.basic-specter)
+(ns exercises.ch1.basic-specter
+  "This is used by other namespaces so that the grotty details of looking up
+   protocol functions aren't always visible.")
 
 (defprotocol StructurePath
   (select* [this structure continuation]))
@@ -28,12 +30,11 @@
       (selector-function element structure continuation))))
 
 
-(defn mkfn:frozen-selector-actions [selector]
+(defn predict-select-computation [selector]
   (reduce (fn [continuation element]
             (mkfn:selector-function-calling-continuation element continuation))
           vector
           (reverse selector)))
 
 (defn select [selector structure]
-  (let [frozen (mkfn:frozen-selector-actions selector)]
-    (frozen structure)))
+  ((predict-select-computation selector) structure))
