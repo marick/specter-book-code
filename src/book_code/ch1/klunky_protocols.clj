@@ -2,7 +2,7 @@
   (:use midje.sweet commons.clojure.core))
 
 
-(defprotocol StructurePath
+(defprotocol Navigator
   (select* [this remainder structure]))
 
 (defn select [[x & xs :as selector] structure]
@@ -11,12 +11,12 @@
     (select* x xs structure)))
 
 (extend-type clojure.lang.Keyword
-  StructurePath
+  Navigator
   (select* [this remainder structure]
     (select remainder (get structure this))))
 
 (extend-type clojure.lang.AFn
-  StructurePath
+  Navigator
   (select* [this remainder structure]
     (if (this structure)
       (select remainder structure)

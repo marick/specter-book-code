@@ -1,16 +1,16 @@
 (ns exercises.ch1.continuation-passing
   (:use midje.sweet commons.clojure.core))
 
-(defprotocol StructurePath
+(defprotocol Navigator
   (select* [this structure continuation]))
 
 (extend-type clojure.lang.Keyword
-  StructurePath
+  Navigator
   (select* [this structure continuation]
     (continuation (get structure this))))
 
 (extend-type clojure.lang.AFn
-  StructurePath
+  Navigator
   (select* [this structure continuation]
     (if (this structure)
       (continuation structure)

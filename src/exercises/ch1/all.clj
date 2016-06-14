@@ -6,7 +6,7 @@
 (def ALL (->AllType))
 
 (extend-type AllType
-  StructurePath
+  Navigator
   (select* [this structure continuation]
     :unimplemented))
 
