@@ -8,8 +8,8 @@
 
 ;;; Generic support code
 
-(defn navigation-worker [worker-kw selector-element]
-  (-> (find-protocol-impl Navigator selector-element)
+(defn navigation-worker [worker-kw path-element]
+  (-> (find-protocol-impl Navigator path-element)
       (get worker-kw)))
 
 (defn mkfn:worker-calling-continuation [worker-kw element continuation]
@@ -17,18 +17,18 @@
     (fn [structure]
       (worker element structure continuation))))
 
-(defn predict-computation [worker-kw selector final-action]
+(defn predict-computation [worker-kw path final-action]
   (reduce (fn [continuation element]
             (mkfn:worker-calling-continuation worker-kw element continuation))
           final-action
-          (reverse selector)))
+          (reverse path)))
 
 ;;; Core functions
 
-(defn select [selector structure]
-  ((predict-computation :select* selector vector) structure))
+(defn select [path structure]
+  ((predict-computation :select* path vector) structure))
 
-;;; Implementations of different types of selector elements.
+;;; Implementations of different types of path elements.
 
 (extend-type clojure.lang.Keyword
   Navigator
@@ -99,7 +99,7 @@
       =>                [ 1          2]))
 
 
-  (fact "ALL applies the rest of the selector to each element"
+  (fact "ALL applies the rest of the path to each element"
     (select [ALL :a] [{:a 1} {:a 2} {   }])
     =>               [1      2   nil ]
     (select [ALL even?] [1 2 3 4])

@@ -27,7 +27,7 @@
       =>                [ 1          2]))
 
 
-  (fact "ALL applies the rest of the selector to each element"
+  (fact "ALL applies the rest of the path to each element"
     (select [ALL :a] [{:a 1} {:a 2} {   }])
     =>               [1      2   nil ]
     (select [ALL even?] [1 2 3 4])

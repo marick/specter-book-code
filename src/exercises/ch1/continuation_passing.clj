@@ -16,11 +16,11 @@
       (continuation structure)
       nil)))
 
-(defn predict-select-computation [selector]
+(defn predict-select-computation [path]
   )
 
-(defn select [selector structure]
-  ((predict-select-computation selector) structure))
+(defn select [path structure]
+  ((predict-select-computation path) structure))
 
 
 

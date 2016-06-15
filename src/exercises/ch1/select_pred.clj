@@ -1,7 +1,7 @@
 (ns exercises.ch1.select-pred
   (:use midje.sweet commons.clojure.core))
 
-(defn select-pred [selector candidate]
+(defn select-pred [path candidate]
   :unimplemented)
 
 (future-fact "our implementation matches Specter's"

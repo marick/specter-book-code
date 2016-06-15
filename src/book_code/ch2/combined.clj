@@ -8,28 +8,28 @@
 
 ;;; Generic support code
 
-(defn element-functions-for [selector-element]
-  (find-protocol-impl Navigator selector-element))
+(defn element-functions-for [path-element]
+  (find-protocol-impl Navigator path-element))
 
-(def selector-function-for (comp :select* element-functions-for))
+(def path-function-for (comp :select* element-functions-for))
 
-(defn mkfn:selector-function-calling-continuation [element continuation]
-  (let [selector-function (selector-function-for element)]
+(defn mkfn:path-function-calling-continuation [element continuation]
+  (let [path-function (path-function-for element)]
     (fn [structure]
-      (selector-function element structure continuation))))
+      (path-function element structure continuation))))
 
-(defn predict-select-computation [selector]
+(defn predict-select-computation [path]
   (reduce (fn [continuation element]
-            (mkfn:selector-function-calling-continuation element continuation))
+            (mkfn:path-function-calling-continuation element continuation))
           vector
-          (reverse selector)))
+          (reverse path)))
 
 ;;; Core functions
 
-(defn select [selector structure]
-  ((predict-select-computation selector) structure))
+(defn select [path structure]
+  ((predict-select-computation path) structure))
 
-;;; Implementations of different types of selector elements.
+;;; Implementations of different types of path elements.
 
 (extend-type clojure.lang.Keyword
   Navigator
@@ -100,7 +100,7 @@
       =>                [ 1          2]))
 
 
-  (fact "ALL applies the rest of the selector to each element"
+  (fact "ALL applies the rest of the path to each element"
     (select [ALL :a] [{:a 1} {:a 2} {   }])
     =>               [1      2   nil ]
     (select [ALL even?] [1 2 3 4])

@@ -18,10 +18,10 @@
       nil)))
 
 
-(defn element-functions-for [selector-element]
-  (find-protocol-impl Navigator selector-element))
+(defn element-functions-for [path-element]
+  (find-protocol-impl Navigator path-element))
 
-(def selector-function-for (comp :select* element-functions-for))
+(def path-function-for (comp :select* element-functions-for))
 
 
 (defn mkfn:selector-function-calling-continuation [element continuation]
@@ -30,11 +30,11 @@
       (selector-function element structure continuation))))
 
 
-(defn predict-select-computation [selector]
+(defn predict-select-computation [path]
   (reduce (fn [continuation element]
             (mkfn:selector-function-calling-continuation element continuation))
           vector
-          (reverse selector)))
+          (reverse path)))
 
-(defn select [selector structure]
-  ((predict-select-computation selector) structure))
+(defn select [path structure]
+  ((predict-select-computation path) structure))

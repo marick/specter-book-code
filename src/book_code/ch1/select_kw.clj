@@ -1,10 +1,10 @@
 (ns book-code.ch1.select-kw
   (:use midje.sweet commons.clojure.core))
 
-(defn select-kw [selector structure]
-  (if (empty? selector)
+(defn select-kw [path structure]
+  (if (empty? path)
     (vector structure)
-    (select-kw (rest selector) (get structure (first selector)))))
+    (select-kw (rest path) (get structure (first path)))))
 
 (facts "same behavior from local implementation"
   (select-kw [:a] nil) => [nil]

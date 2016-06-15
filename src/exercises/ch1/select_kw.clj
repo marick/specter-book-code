@@ -2,7 +2,7 @@
   (:use midje.sweet commons.clojure.core))
 
 
-(defn select-kw [selector structure]
+(defn select-kw [path structure]
   :unimplemented)
 
 (future-facts "Behaves the way specter/select does"

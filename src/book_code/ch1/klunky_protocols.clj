@@ -5,8 +5,8 @@
 (defprotocol Navigator
   (select* [this remainder structure]))
 
-(defn select [[x & xs :as selector] structure]
-  (if (empty? selector)
+(defn select [[x & xs :as path] structure]
+  (if (empty? path)
     (vector structure)
     (select* x xs structure)))
 

@@ -1,8 +1,8 @@
 (ns book-code.ch1.select-both
   (:use midje.sweet commons.clojure.core))
 
-(defn select-both [[x & xs :as selector] structure]
-  (cond (empty? selector)
+(defn select-both [[x & xs :as path] structure]
+  (cond (empty? path)
         (vector structure)
 
         (keyword? x)

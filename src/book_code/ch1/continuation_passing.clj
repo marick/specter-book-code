@@ -16,15 +16,15 @@
       (continuation structure)
       nil)))
 
-(defn predict-select-computation [selector]
+(defn predict-select-computation [path]
   (reduce (fn [continuation element]
             (fn [structure]
               (select* element structure continuation)))
           vector
-          (reverse selector)))
+          (reverse path)))
 
-(defn select [selector structure]
-  ((predict-select-computation selector) structure))
+(defn select [path structure]
+  ((predict-select-computation path) structure))
 
 
 
