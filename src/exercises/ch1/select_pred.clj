@@ -1,7 +1,7 @@
 (ns exercises.ch1.select-pred
   (:use midje.sweet commons.clojure.core))
 
-(defn select-pred [path candidate]
+(defn select-pred [path structure]
   :unimplemented)
 
 (future-fact "our implementation matches Specter's"
@@ -15,7 +15,7 @@
 ;; That is:
 ;;     (= [1 2 3] '(1 2 3)) => true
 ;; Since Specter specifically returns a vector, I've added
-;; a specific type test.
+;; a specific test for that type.
 
 (future-fact "the result is specifically a vector"
   (select-pred [odd? pos?] 1) => vector)

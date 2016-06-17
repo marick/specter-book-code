@@ -1,11 +1,11 @@
 (ns book-code.ch1.select-pred
   (:use midje.sweet commons.clojure.core))
 
-(defn select-pred [path candidate]
+(defn select-pred [path structure]
   (if (empty? path)
-    (vector candidate)
-    (if ( (first path) candidate)
-      (select-pred (rest path) candidate)
+    (vector structure)
+    (if ( (first path) structure)
+      (select-pred (rest path) structure)
       nil)))
 
 (fact "our implementation matches Specter's"
