@@ -1,6 +1,6 @@
 (ns exercises.ch1.all
   (:use midje.sweet commons.clojure.core)
-  (:use exercises.ch1.basic-specter))
+  (:use book-code.ch1.continuation-passing))
 
 (deftype AllType [])
 (def ALL (->AllType))

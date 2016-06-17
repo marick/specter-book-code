@@ -1,6 +1,6 @@
 (ns book-code.ch1.all
   (:use midje.sweet commons.clojure.core)
-  (:use book-code.ch1.realistic))
+  (:use book-code.ch1.continuation-passing))
 
 (deftype AllType [])
 (def ALL (->AllType))
