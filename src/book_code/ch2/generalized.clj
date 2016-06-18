@@ -8,25 +8,17 @@
 
 ;;; Generic support code
 
-(defn navigation-worker [worker-kw path-element]
-  (-> (find-protocol-impl Navigator path-element)
-      (get worker-kw)))
-
-(defn mkfn:worker-calling-continuation [worker-kw element continuation]
-  (let [worker (navigation-worker worker-kw element)]
-    (fn [structure]
-      (worker element structure continuation))))
-
-(defn predict-computation [worker-kw path final-action]
+(defn predict-computation [element-fn path final-action]
   (reduce (fn [continuation element]
-            (mkfn:worker-calling-continuation worker-kw element continuation))
+            (fn [structure]
+              (element-fn element structure continuation)))
           final-action
           (reverse path)))
 
 ;;; Core functions
 
 (defn select [path structure]
-  ((predict-computation :select* path vector) structure))
+  ((predict-computation select* path vector) structure))
 
 ;;; Implementations of different types of path elements.
 

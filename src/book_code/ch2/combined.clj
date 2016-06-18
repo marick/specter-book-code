@@ -8,19 +8,10 @@
 
 ;;; Generic support code
 
-(defn element-functions-for [path-element]
-  (find-protocol-impl Navigator path-element))
-
-(def path-function-for (comp :select* element-functions-for))
-
-(defn mkfn:path-function-calling-continuation [element continuation]
-  (let [path-function (path-function-for element)]
-    (fn [structure]
-      (path-function element structure continuation))))
-
 (defn predict-select-computation [path]
   (reduce (fn [continuation element]
-            (mkfn:path-function-calling-continuation element continuation))
+            (fn [structure]
+              (select* element structure continuation)))
           vector
           (reverse path)))
 
