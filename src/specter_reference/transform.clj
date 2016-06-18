@@ -1,4 +1,4 @@
-(ns specter-reference.ch2.simple-transform
+(ns specter-reference.transform
   ;; Specter is broken into two namespaces, one for macros, because of (1) ClojureScript and
   ;; (2) code that provides even better performance. In real life, you will probably want
   ;; to combine the two namespaces into a "catchall" namespace, using either the
@@ -14,7 +14,7 @@
   (transform [odd?] inc 2) => 2
   (transform [ALL] inc [1 2 3]) => [2 3 4])
 
-(fact "applies transform only to path endpoints"
+(fact "applies transform function only to path endpoints"
   (transform [:a :b] inc {:a {:b 1} :b "hi"}) => {:a {:b 2} :b "hi"}
   (transform [ALL :b] inc [{:b 1} {:b 2}]) => [{:b 2} {:b 3}]
   (transform [:b ALL] inc {:b [1 2 3]}) => {:b [2 3 4]}
