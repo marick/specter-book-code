@@ -49,14 +49,39 @@
 (deftype AllType [])
 (def ALL (->AllType))
 
+(defprotocol AllTransformProtocol
+  (all-transform [structure continuation]))
+
+(defn into-would-reverse?
+  "If `true`, can't use `(into (empty structure) ...)`
+  to retain the original type. True of lists and
+  lazy sequences."
+  [structure]
+  (list? (empty structure)))
+
+(extend-protocol AllTransformProtocol
+  nil
+  (all-transform [structure next-fn]
+    nil)
+
+  clojure.lang.PersistentVector
+  (all-transform [structure continuation]
+    (mapv continuation structure))
+
+  Object
+  (all-transform [structure continuation]
+    (cond (into-would-reverse? structure)
+          (doall (map continuation structure))
+
+          :else
+          (into (empty structure) (map continuation structure)))))
+
 (extend-type AllType
   Navigator
   (select* [this structure continuation]
     (into [] (mapcat continuation structure)))
   (transform* [this structure continuation]
-    ;; It happens that `ALL` produces a lazyseq for the following.
-    ;; This is probably not something to be relied on.
-    (map continuation structure)))
+    (all-transform structure continuation)))
 
 ;;; New `transform` tests
 
@@ -91,10 +116,32 @@
   (transform [even?] (constantly nil) 2) => nil
   (transform [vector? ALL even?] (constantly nil) [2]) => [nil])
 
-(fact "ALL produces a `seq`, not a `vector`"
-  (let [result (transform [ALL] inc (list 1 2 3))]
-    result => seq?
-    result =not=> vector?))
+(fact "ALL works with various types"
+  (fact "vectors"
+    (let [result (transform [ALL] inc [1 2 3])]
+      result => [2 3 4]
+      (vector? result) => true))
+
+  (fact "lists"
+    (let [result (transform [ALL] inc '(1 2 3))]
+      result => [2 3 4]  ; midje uses content equality, like Clojure
+      (seq? result) => true
+      ;; For efficiency's sake, Specter's transformation of a list
+      ;; produces a (fully realized) lazy sequence. This is appropriate
+      ;; because lots of Clojure operations on lists do the same.
+      ;; Did you know that `(list? (cons 1 '(2 3)))` is false?
+      (list? result) => false))
+
+  (fact "nil"
+    (let [result (transform [ALL] inc nil)]
+      result => nil
+      (nil? result) => true))
+
+  (fact "lazy sequences"
+    (let [ls (map dec [1 2 3])
+          result (transform [ALL] inc ls)]
+      result => [1 2 3]
+      (seq? result) => true)))
 
 ;;; Old `select` tests
 

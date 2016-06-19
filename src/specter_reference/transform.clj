@@ -35,7 +35,31 @@
   (transform [even?] (constantly nil) 2) => nil
   (transform [vector? ALL even?] (constantly nil) [2]) => [nil])
 
-(fact "ALL produces a `seq`, not a `vector`"
-  (let [result (transform [ALL] inc (list 1 2 3))]
-    result => seq?
-    result =not=> vector?))
+(fact "ALL works with various types"
+  ;; Note: this is not a complete list of types ALL applies to.
+  ;; It can also be used with maps and PersistentQueues.
+  (fact "vectors"
+    (let [result (transform [ALL] inc [1 2 3])]
+      result => [2 3 4]
+      (vector? result) => true))
+
+  (fact "lists"
+    (let [result (transform [ALL] inc '(1 2 3))]
+      result => [2 3 4]  ; midje uses content equality, like Clojure
+      (seq? result) => true
+      ;; For efficiency's sake, Specter's transformation of a list
+      ;; produces a (fully realized) lazy sequence. This is appropriate
+      ;; because lots of Clojure operations on lists do the same.
+      ;; Did you know that `(list? (cons 1 '(2 3)))` is false?
+      (list? result) => false))
+
+  (fact "nil"
+    (let [result (transform [ALL] inc nil)]
+      result => nil
+      (nil? result) => true))
+
+  (fact "lazy sequences"
+    (let [ls (map dec [1 2 3])
+          result (transform [ALL] inc ls)]
+      result => [1 2 3]
+      (seq? result) => true)))
